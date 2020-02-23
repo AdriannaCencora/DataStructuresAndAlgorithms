@@ -1,3 +1,5 @@
+#pragma once
+
 #include "GenericStructure.h"
 
 #include <memory>
@@ -5,7 +7,7 @@
 class DynamicArray : public GenericStructure {
     public:
         DynamicArray() {}
-        DynamicArray(int size) : size(size), data(std::make_unique<int[]>(size)) {}
+        DynamicArray(int size) : data(std::make_unique<int[]>(size)), logicalSize(size), capacity(size*2) {}
         virtual ~DynamicArray() {}
 
         virtual void insert(int position, int value);
@@ -13,10 +15,12 @@ class DynamicArray : public GenericStructure {
         virtual int search(int value);
         virtual int getSize();
         virtual void print();
-        virtual void generate();
+        virtual void fillWithRandomData();
+		virtual void readFromFile();
 
     private:
         std::unique_ptr<int[]> data{};
-        std::size_t size{};
+        std::size_t logicalSize{};
+		std::size_t capacity{};
 
 };

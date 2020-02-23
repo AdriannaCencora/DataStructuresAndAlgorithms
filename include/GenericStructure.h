@@ -1,3 +1,5 @@
+#pragma once
+
 class GenericStructure {
     public:
         virtual ~GenericStructure() = default;
@@ -7,5 +9,6 @@ class GenericStructure {
         virtual int search(int value) = 0;
         virtual int getSize() = 0;
         virtual void print() = 0;
-        virtual void generate() = 0;
+        virtual void fillWithRandomData() = 0;
+		virtual void readFromFile() = 0;
 };
