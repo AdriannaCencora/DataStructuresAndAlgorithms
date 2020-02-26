@@ -8,6 +8,13 @@ int main() {
 
 	structure->fillWithRandomData();
 	structure->print();
+	if (structure->search(200)) {
+		std::cout << "Number found" ;
+	}
+	else
+		std::cout << "Number not found" ;
+
+	structure->insert(2, 200);
 
     return 0;
 }
