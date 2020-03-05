@@ -18,6 +18,7 @@ class DynamicArray : public GenericStructure {
         virtual void fillWithRandomData();
 		virtual void readFromFile();
 
+		int logicalSize;
     private:
 		void insertFront(int value);
 		void insertBack(int value);
@@ -25,8 +26,7 @@ class DynamicArray : public GenericStructure {
 
 		void resize(int newCapacity);
 
-        std::size_t logicalSize{};
-		std::size_t capacity{};
+		int capacity{};
         std::unique_ptr<int[]> data{};
 
 };

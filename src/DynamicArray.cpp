@@ -71,32 +71,36 @@ void DynamicArray::readFromFile(){
 void DynamicArray::insertFront(int value) {
 
 	if (logicalSize == capacity) {
-
+		resize(capacity * 2);
 	}
+
+	for(int position{logicalSize-1}; position >= 0; --position) {
+		data[position + 1] = data[position];
+	}
+
+	data[0] = value;
+	++logicalSize;
 
 }
 void DynamicArray::insertBack(int value) {
 	if (logicalSize == capacity) {
-		capacity *= 2;
-
+		resize(capacity * 2);
 	}
-
 
 	data[logicalSize] = value;
 	++logicalSize;
 }
 
-void DynamicArray::resize(newCapacity) {
+void DynamicArray::resize(int newCapacity) {
 
 	std::unique_ptr<int[]> dataCopy = std::make_unique<int[]>(newCapacity);
 
-	for(int position{0}, position < logicalSize; ++position) {
-		dataCopy[position] = data[position]
+	for(int position{0}; position < logicalSize; ++position) {
+		dataCopy[position] = data[position];
 	}
 
-	delete data[];
-
-	data = dataCopy;
+	data.reset();
+	data = std::move(dataCopy);
 
 
 }
