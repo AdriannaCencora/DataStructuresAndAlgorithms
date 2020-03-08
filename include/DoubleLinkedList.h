@@ -18,9 +18,6 @@ class DoubleLinkedList : public GenericStructure {
         virtual void fillWithRandomData();
 		virtual void readFromFile();
 
-    private:
-		bool isEmpty();
-
 		struct Node {
 			Node(int nodeData) : data(nodeData) {}
 
@@ -29,17 +26,20 @@ class DoubleLinkedList : public GenericStructure {
 			Node* prev{nullptr};
 		};
 
+
+    private:
+		bool isEmpty();
+		void findNodeAtPosition(int position);
+
+		Node* currentNode;
 		Node* head{nullptr};
 		Node* tail{nullptr};
-		Node* currentNode{nullptr};
-
 		size_t size{};
 
-//		void insertFront(int value);
-//		void insertBack(int value);
-//		void insertAtPosition(int position, int value);
+		void insertFront(int value);
+		void insertBack(int value);
+		void insertAtPosition(int position, int value);
 
 
-//        std::unique_ptr<int[]> data{};
 
 };

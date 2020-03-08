@@ -41,6 +41,6 @@ include_directories(include runUnitTests)
 file(GLOB SOURCES "src/*.cpp")
 add_executable(DataStructuresAndAlgorithms ${SOURCES})
 
-add_executable(runUnitTests "unitTests/runUnitTests.cpp" "unitTests/DynamicArrayTests.cpp")
+add_executable(runUnitTests "unitTests/runUnitTests.cpp" "unitTests/DynamicArrayTests.cpp" "unitTests/DoubleLinkedListTests.cpp")
 target_link_libraries(runUnitTests gtest gtest_main)
-add_test(NAME sizeEqualsTwo COMMAND runUnitTests)
+#add_test(NAME sizeEqualsTwo COMMAND runUnitTests)
