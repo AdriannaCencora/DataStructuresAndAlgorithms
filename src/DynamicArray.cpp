@@ -5,30 +5,37 @@
 
 void DynamicArray::insert(int position, int value) {
 
-	if (position == 0) {
+
+	if (position == 0)
 		insertFront(value);
-	}
 
-	else if (position == logicalSize) {
+	else if (position == size)
 		insertBack(value);
-	}
 
-	else if (position < 0 or position > logicalSize) {
+	else if (position < 0 or position > size)
 		throw std::bad_alloc();
-	}
 
-	else {
+	else
 		insertAtPosition(position, value);
-	}
 
 }
 
 void DynamicArray::remove(int position) {
 
+	if (position < 0 or position >= size or (getSize() == 0)) {
+		throw std::bad_alloc();
+	}
+
+	for (int i{position}; i < size -1; ++i) {
+		data[i] = data[i + 1];
+	}
+
+	size--;
 }
 
-bool  DynamicArray::search(int value) {
-	for (int position{0}; position < logicalSize; ++position) {
+bool DynamicArray::search(int value) {
+
+	for (int position{0}; position < size; ++position) {
 		if (data[position] == value)
 			return true;
 	}
@@ -36,16 +43,11 @@ bool  DynamicArray::search(int value) {
 	return false;
 }
 
-int DynamicArray::getSize() {
-
-	return logicalSize;
-}
-
 void DynamicArray::print() {
 
 	std::cout << "Dynamic array elements are: " << std::endl;
 
-	for (int i{0}; i < logicalSize; i++) {
+	for (int i{0}; i < size; i++) {
 		std::cout << data[i] << " ";
 	}
 
@@ -59,7 +61,7 @@ void DynamicArray::fillWithRandomData(){
     std::mt19937 randomGenerator(seed());
 	std::uniform_int_distribution<> transform(1, upperRange);
 
-	for (int position{0}; position < logicalSize; ++position) {
+	for (int position{0}; position < size; ++position) {
 		data[position] = transform(randomGenerator);
 	}
 }
@@ -70,41 +72,76 @@ void DynamicArray::readFromFile(){
 
 void DynamicArray::insertFront(int value) {
 
-	if (logicalSize == capacity) {
+	if (size == capacity) {
 		resize(capacity * 2);
 	}
 
-	for(int position{logicalSize-1}; position >= 0; --position) {
-		data[position + 1] = data[position];
+	if (getSize() != 0) {
+		for(int position{size-1}; position >= 0; --position) {
+			data[position + 1] = data[position];
+		}
 	}
 
 	data[0] = value;
-	++logicalSize;
-
+	++size;
 }
+
 void DynamicArray::insertBack(int value) {
-	if (logicalSize == capacity) {
+	if (size == capacity) {
 		resize(capacity * 2);
 	}
 
-	data[logicalSize] = value;
-	++logicalSize;
+	data[size] = value;
+	++size;
 }
 
 void DynamicArray::resize(int newCapacity) {
 
 	std::unique_ptr<int[]> dataCopy = std::make_unique<int[]>(newCapacity);
 
-	for(int position{0}; position < logicalSize; ++position) {
+	for(int position{0}; position < size; ++position) {
 		dataCopy[position] = data[position];
 	}
 
+	capacity = newCapacity;
+	reassign(std::move(dataCopy));
+}
+
+
+
+void DynamicArray::reassign(std::unique_ptr<int[]> newData) {
 	data.reset();
-	data = std::move(dataCopy);
-
-
+	data = std::move(newData);
 }
 
 void DynamicArray::insertAtPosition(int position, int value) {
+	if (size == capacity) {
+			resize(capacity * 2);
+		}
+
+	ror(position);
+
+	data[position] = value;
+	++size;
 
 }
+void DynamicArray::ror(int position) {
+
+	for (int i{size}; i > position; --i) {
+		data[i] = data[i-1];
+	}
+}
+
+int DynamicArray::getSize() const {
+	return size;
+}
+
+int DynamicArray::getCapacity() const {
+	return capacity;
+}
+
+int DynamicArray::getDataAt(int position) const {
+	return data[position];
+}
+
+
