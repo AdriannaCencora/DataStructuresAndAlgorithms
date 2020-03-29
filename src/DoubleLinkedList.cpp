@@ -64,7 +64,7 @@ int DoubleLinkedList::getSize() {
 }
 
 void DoubleLinkedList::print() {}
-void DoubleLinkedList::fillWithRandomData() {}
+void DoubleLinkedList::fillWithRandomData(int givenSize, int givenUpperRange) {}
 void DoubleLinkedList::readFromFile() {}
 
 bool DoubleLinkedList::isEmpty() {
@@ -75,7 +75,7 @@ void DoubleLinkedList::findNodeAtPosition(int position) {
 
 	if(isEmpty())
 		currentNode = nullptr;
-	
+
 	else {
 		currentNode = head;
 

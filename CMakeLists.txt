@@ -38,6 +38,8 @@ project(DataStructuresAndAlgorithms)
 
 include_directories(include runUnitTests)
 
+set (CMAKE_CXX_FLAGS "-g -Wall -W")
+
 file(GLOB SOURCES "src/*.cpp")
 add_executable(DataStructuresAndAlgorithms ${SOURCES})
 

@@ -6,7 +6,7 @@
 
 class DynamicArray : public GenericStructure {
     public:
-        DynamicArray() :  capacity(4), data(std::make_unique<int[]>(capacity)) {}
+        DynamicArray() : capacity(4), data(std::make_unique<int[]>(capacity)) {}
         DynamicArray(int size) : size(size), capacity(size*2), data(std::make_unique<int[]>(capacity)) {}
         virtual ~DynamicArray() {}
 
@@ -14,7 +14,7 @@ class DynamicArray : public GenericStructure {
         virtual void remove(int position);
         virtual bool search(int value);
         virtual void print();
-        virtual void fillWithRandomData();
+        virtual void fillWithRandomData(int givenSize, int givenUpperRange);
 		virtual void readFromFile();
 
 		int getSize() const;

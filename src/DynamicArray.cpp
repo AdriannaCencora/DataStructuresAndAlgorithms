@@ -45,7 +45,7 @@ bool DynamicArray::search(int value) {
 
 void DynamicArray::print() {
 
-	std::cout << "Dynamic array elements are: " << std::endl;
+	std::cout <<  std::endl << "Dynamic array elements are: " << std::endl;
 
 	for (int i{0}; i < size; i++) {
 		std::cout << data[i] << " ";
@@ -54,9 +54,13 @@ void DynamicArray::print() {
 	std::cout << std::endl;
 }
 
-void DynamicArray::fillWithRandomData(){
+void DynamicArray::fillWithRandomData(int givenSize, int givenUpperRange){
 
-	const int upperRange = 15500;
+	size = givenSize;
+	resize(size*2);
+
+	const int upperRange = givenUpperRange;
+
 	std::random_device seed;
     std::mt19937 randomGenerator(seed());
 	std::uniform_int_distribution<> transform(1, upperRange);

@@ -8,6 +8,6 @@ class GenericStructure {
         virtual void remove(int position) = 0;
         virtual bool search(int value) = 0;
         virtual void print() = 0;
-        virtual void fillWithRandomData() = 0;
+        virtual void fillWithRandomData(int givenSize, int givenUpperRange) = 0;
 		virtual void readFromFile() = 0;
 };
