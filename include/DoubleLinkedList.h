@@ -16,7 +16,7 @@ class DoubleLinkedList : public GenericStructure {
         virtual int getSize();
         virtual void print();
         virtual void fillWithRandomData(int givenSize, int givenUpperRange);
-		virtual void readFromFile();
+		virtual void readFromFile(FileHandler& fileHandler);
 
 		struct Node {
 			Node(int nodeData) : data(nodeData) {}

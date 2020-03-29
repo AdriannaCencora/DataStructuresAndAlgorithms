@@ -1,5 +1,7 @@
 #pragma once
 
+#include "FileHandler.h"
+
 class GenericStructure {
     public:
         virtual ~GenericStructure() = default;
@@ -9,5 +11,5 @@ class GenericStructure {
         virtual bool search(int value) = 0;
         virtual void print() = 0;
         virtual void fillWithRandomData(int givenSize, int givenUpperRange) = 0;
-		virtual void readFromFile() = 0;
+		virtual void readFromFile(FileHandler& fileHandler) = 0;
 };

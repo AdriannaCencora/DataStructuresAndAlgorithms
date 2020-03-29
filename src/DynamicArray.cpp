@@ -56,28 +56,26 @@ void DynamicArray::print() {
 
 void DynamicArray::fillWithRandomData(int givenSize, int givenUpperRange){
 
-	size = givenSize;
-	resize(size*2);
-
 	const int upperRange = givenUpperRange;
 
 	std::random_device seed;
     std::mt19937 randomGenerator(seed());
 	std::uniform_int_distribution<> transform(1, upperRange);
 
-	for (int position{0}; position < size; ++position) {
-		data[position] = transform(randomGenerator);
+	for (int position{0}; position < givenSize; ++position) {
+		insert(position, transform(randomGenerator));
 	}
 }
 
-void DynamicArray::readFromFile(&inputFile){
+void DynamicArray::readFromFile(FileHandler& fileHandler){
 	int buffer{};
+	int tmpSize{};
 
-	inputFile >> size;
+	fileHandler.inputFile >> tmpSize;
 	int position{};
 
-	while(inputFile >> buffer) {
-		insert(buffer, position);
+	while(fileHandler.inputFile >> buffer) {
+		insert(position, buffer);
 		++position;
 	}
 }

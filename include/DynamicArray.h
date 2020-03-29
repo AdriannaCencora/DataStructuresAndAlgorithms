@@ -15,7 +15,7 @@ class DynamicArray : public GenericStructure {
         virtual bool search(int value);
         virtual void print();
         virtual void fillWithRandomData(int givenSize, int givenUpperRange);
-		virtual void readFromFile();
+		virtual void readFromFile(FileHandler& fileHandler);
 
 		int getSize() const;
 		int getCapacity() const;

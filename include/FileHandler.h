@@ -17,9 +17,7 @@ class FileHandler {
 	        inputFile.close();
 	    }
 
-	private:
     std::fstream inputFile;
-
 
 };
 

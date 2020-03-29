@@ -80,7 +80,7 @@ void Application::chooseOperation() {
 				std::cin >> fileName;
 
 				auto fileHandler = new FileHandler(fileName);
-				structure->readDataFromFile(fileHandler);
+				structure->readFromFile(*fileHandler);
 				delete fileHandler;
 				break;
 					  }
