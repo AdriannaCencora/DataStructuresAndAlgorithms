@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "DynamicArray.h"
 #include "DoubleLinkedList.h"
+#include "FileHandler.h"
 
 using namespace std;
 
@@ -73,8 +74,16 @@ void Application::chooseOperation() {
 			case '0':
 				isRunning = false;
 				break;
-			case '1':
+			case '1': {
+				std::string fileName;
+				std::cout << "Filename: " << std::endl;
+				std::cin >> fileName;
+
+				auto fileHandler = new FileHandler(fileName);
+				structure->readDataFromFile(fileHandler);
+				delete fileHandler;
 				break;
+					  }
 			case '2': {
 				std::cout << "Size: " << std::endl;
 				std::cin >> size;

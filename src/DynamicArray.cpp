@@ -70,8 +70,16 @@ void DynamicArray::fillWithRandomData(int givenSize, int givenUpperRange){
 	}
 }
 
-void DynamicArray::readFromFile(){
+void DynamicArray::readFromFile(&inputFile){
+	int buffer{};
 
+	inputFile >> size;
+	int position{};
+
+	while(inputFile >> buffer) {
+		insert(buffer, position);
+		++position;
+	}
 }
 
 void DynamicArray::insertFront(int value) {
