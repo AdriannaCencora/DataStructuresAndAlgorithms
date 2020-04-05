@@ -4,6 +4,7 @@
 #include "DynamicArray.h"
 #include "DoubleLinkedList.h"
 #include "FileHandler.h"
+#include "Test.h"
 
 using namespace std;
 
@@ -11,7 +12,7 @@ void Application::displayMenu() {
     cout << "MENU" << endl;
     cout << "Pick a number." << endl;
     cout << "1. Dynamic Array." << endl;
-//    cout << "2. Double Linked List." << endl;
+    cout << "2. Double Linked List." << endl;
 //    cout << "3. Heap." << endl;
 //    cout << "4. BST." << endl;
 //    cout << "5. R&B Tree." << endl;
@@ -51,9 +52,13 @@ void Application::run() {
 					structure = std::make_unique<DoubleLinkedList>();
 					chooseOperation();
 					break;
-				default:
-					cout << "Wrooong number, next time choose better!" << endl << endl;
+				case 't':
+					Test test;
+					test.run();
 					break;
+			//	default:
+			//		cout << "Wrooong number, next time choose better!" << endl << endl;
+			//		break;
 				}
 }
 }

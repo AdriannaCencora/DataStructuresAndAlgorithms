@@ -13,7 +13,7 @@ class DoubleLinkedList : public GenericStructure {
         virtual void insert(int position, int value);
         virtual void remove(int value);
         virtual bool search(int value);
-        virtual int getSize();
+        virtual int getSize() const;
         virtual void print();
         virtual void fillWithRandomData(int givenSize, int givenUpperRange);
 		virtual void readFromFile(FileHandler& fileHandler);
@@ -30,7 +30,7 @@ class DoubleLinkedList : public GenericStructure {
     private:
 		bool isEmpty();
 		void findNodeAtPosition(int position);
-
+		void findNodeByValue(int value);
 		Node* currentNode;
 		Node* head{nullptr};
 		Node* tail{nullptr};

@@ -33,6 +33,7 @@ void DoubleLinkedList::insertFront(int value) {
 	}
 
 	++size;
+
 }
 
 void DoubleLinkedList::insertBack(int value)  {
@@ -44,6 +45,7 @@ void DoubleLinkedList::insertBack(int value)  {
 	tail = newNode;
 
 	++size;
+
 }
 
 void DoubleLinkedList::insertAtPosition(int position, int value) {
@@ -52,19 +54,21 @@ void DoubleLinkedList::insertAtPosition(int position, int value) {
 
 	newNode->next = currentNode;
 	newNode->prev = currentNode->prev;
-	currentNode->prev->next = newNode;
+	newNode->prev->next = newNode;
 	currentNode->prev = newNode;
 
 	++size;
+
 }
 
 void DoubleLinkedList::remove(int value) {
 
 	findNodeByValue(value);
+
 	if (currentNode == nullptr)
 		std::cout << std::endl << "Node doesn't exist" << std::endl;
 
-	else if (currentNode = head) {
+	else if (currentNode == head) {
 		currentNode->next->prev = nullptr;
 		head = currentNode->next;
 	}
@@ -81,19 +85,22 @@ void DoubleLinkedList::remove(int value) {
 
 	}
 
+	--size;
 }
 
 
 bool DoubleLinkedList::search(int value) {
+	findNodeByValue(value);
 
-	if (currentNode != nullptr)
+	if (currentNode != nullptr) {
 		return true;
+	}
 
 	return false;
 
 }
 
-int DoubleLinkedList::getSize() {
+int DoubleLinkedList::getSize() const {
 	return size;
 }
 
@@ -145,8 +152,9 @@ void DoubleLinkedList::findNodeAtPosition(int position) {
 	else {
 		currentNode = head;
 
-		for(int i{0}; i <= position and currentNode != nullptr; ++i) {
-			currentNode = currentNode->next;
+		for(int i{0}; i <= position and currentNode != nullptr; i++) {
+			if (i != position)
+				currentNode = currentNode->next;
 		}
 	}
 }

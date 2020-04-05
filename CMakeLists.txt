@@ -38,7 +38,7 @@ project(DataStructuresAndAlgorithms)
 
 include_directories(include runUnitTests)
 
-set (CMAKE_CXX_FLAGS "-g -Wall -W")
+set (CMAKE_CXX_FLAGS "-g -Wall -W -ggdb3")
 
 file(GLOB SOURCES "src/*.cpp")
 add_executable(DataStructuresAndAlgorithms ${SOURCES})

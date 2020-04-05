@@ -14,10 +14,10 @@ class DynamicArray : public GenericStructure {
         virtual void remove(int position);
         virtual bool search(int value);
         virtual void print();
+		virtual int getSize() const;
         virtual void fillWithRandomData(int givenSize, int givenUpperRange);
 		virtual void readFromFile(FileHandler& fileHandler);
 
-		int getSize() const;
 		int getCapacity() const;
 		int getDataAt(int position) const;
 
