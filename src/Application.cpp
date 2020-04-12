@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "DynamicArray.h"
 #include "DoubleLinkedList.h"
+#include "Heap.h"
 #include "FileHandler.h"
 #include "Test.h"
 
@@ -13,10 +14,10 @@ void Application::displayMenu() {
     cout << "Pick a number." << endl;
     cout << "1. Dynamic Array." << endl;
     cout << "2. Double Linked List." << endl;
-//    cout << "3. Heap." << endl;
-//    cout << "4. BST." << endl;
-//    cout << "5. R&B Tree." << endl;
-//    cout << "6. AVL." << endl;
+    cout << "3. Heap." << endl;
+    cout << "4. BST." << endl;
+    cout << "5. R&B Tree." << endl;
+    cout << "6. AVL." << endl;
 
     cout << "t. Test." << endl;
     cout << "0. Exit." << endl << endl;
@@ -52,6 +53,9 @@ void Application::run() {
 					structure = std::make_unique<DoubleLinkedList>();
 					chooseOperation();
 					break;
+				case '3':
+					structure = std::make_unique<Heap>();
+					chooseOperation();
 				case 't':
 					Test test;
 					test.run();
@@ -65,7 +69,7 @@ void Application::run() {
 
 void Application::chooseOperation() {
 
-	int isRunning{true};
+	bool isRunning{true};
 	int position{};
 	int size{};
 	int value{};
@@ -120,7 +124,7 @@ void Application::chooseOperation() {
 				break;
 					  }
 			case '5': {
-				std::cout << "Remove from position: " << std::endl;
+				std::cout << "Remove from position (array) / remove value (list, heap]): " << std::endl;
 				std::cin >> position;
 				structure->remove(position);
 				structure->print();

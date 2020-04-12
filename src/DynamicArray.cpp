@@ -154,4 +154,14 @@ int DynamicArray::getDataAt(int position) const {
 	return data[position];
 }
 
+void DynamicArray::swapElements(int first, int second) {
+	int tmp;
+	tmp = data[first];
+	data[first] = data[second];
+	data[second] = tmp;
 
+}
+
+int DynamicArray::operator[](int position) {
+	return data[position];
+}

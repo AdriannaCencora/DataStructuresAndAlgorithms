@@ -20,6 +20,8 @@ class DynamicArray : public GenericStructure {
 
 		int getCapacity() const;
 		int getDataAt(int position) const;
+		void swapElements(int first, int second);
+		int operator[](int position);
 
     private:
 		void insertFront(int value);
