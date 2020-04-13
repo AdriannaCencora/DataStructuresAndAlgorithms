@@ -4,6 +4,8 @@
 #include "DynamicArray.h"
 #include "DoubleLinkedList.h"
 #include "Heap.h"
+#include "BST.h"
+
 #include "FileHandler.h"
 #include "Test.h"
 
@@ -43,26 +45,42 @@ void Application::run() {
 
 			switch (userChoice) {
 				case '0':
-					isRunning = false;
-					break;
+				   	{
+						isRunning = false;
+						break;
+					}
 				case '1':
-					structure = std::make_unique<DynamicArray>();
-					chooseOperation();
-					break;
+					{
+						structure = std::make_unique<DynamicArray>();
+						chooseOperation();
+					}	break;
 				case '2':
-					structure = std::make_unique<DoubleLinkedList>();
-					chooseOperation();
-					break;
+					{
+						structure = std::make_unique<DoubleLinkedList>();
+						chooseOperation();
+						break;
+					}
 				case '3':
-					structure = std::make_unique<Heap>();
-					chooseOperation();
+					{
+						structure = std::make_unique<Heap>();
+						chooseOperation();
+					}
+				case '4':
+					{
+						structure = std::make_unique<BST>();
+						chooseOperation();
+					}
 				case 't':
-					Test test;
-					test.run();
-					break;
-			//	default:
-			//		cout << "Wrooong number, next time choose better!" << endl << endl;
-			//		break;
+					{
+						Test test;
+						test.run();
+						break;
+					}
+				default:
+				   	{
+						cout << "wrooong number, next time choose better!" << endl << endl;
+						break;
+					}
 				}
 }
 }

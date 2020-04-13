@@ -4,12 +4,12 @@
 
 void Heap::insert(int position, int value) {
 //TODO: set default value to position
-//
 	if (position != heapArray->getSize())
 		position = heapArray->getSize();
 
 	heapArray->insert(position, value);
 
+	//TODO: Extract to function
 	int currentNode = heapArray->getSize() - 1;
 	int parent = (currentNode - 1) / 2;
 
@@ -38,6 +38,7 @@ void Heap::remove(int value) {
 	heapArray->swapElements(indexFound, heapArray->getSize() -1);
 	heapArray->remove(heapArray->getSize() -1);
 
+	//TODO: Extract to function
 
 	 int parentIndex = indexFound;
 	 int leftChildIndex = 2 * indexFound + 1;
@@ -58,10 +59,7 @@ void Heap::remove(int value) {
 	         heapArray->swapElements(parentIndex, swapChildIndex);
 	         parentIndex = swapChildIndex;
 	     }
-
 	}
-
-
 
 	--size;
 

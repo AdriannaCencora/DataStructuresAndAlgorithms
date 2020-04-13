@@ -31,15 +31,12 @@ class DoubleLinkedList : public GenericStructure {
 		bool isEmpty();
 		void findNodeAtPosition(int position);
 		void findNodeByValue(int value);
-		Node* currentNode;
-		Node* head{nullptr};
-		Node* tail{nullptr};
-		size_t size{};
-
 		void insertFront(int value);
 		void insertBack(int value);
 		void insertAtPosition(int position, int value);
 
-
-
+		Node* currentNode;
+		Node* head{nullptr};
+		Node* tail{nullptr};
+		size_t size{};
 };
