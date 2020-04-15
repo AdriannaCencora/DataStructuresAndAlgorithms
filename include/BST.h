@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "GenericStructure.h"
@@ -32,6 +31,7 @@ class BST : public GenericStructure {
 
 
     private:
+		BST::Node* insert(Node* currentParent, int value);
 		bool isEmpty();
 		void rotateLeft(Node* axis);
 		void rotateRight(Node* axis);

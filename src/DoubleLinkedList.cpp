@@ -128,6 +128,7 @@ void DoubleLinkedList::fillWithRandomData(int givenSize, int givenUpperRange) {
 }
 void DoubleLinkedList::readFromFile(FileHandler& fileHandler) {
 
+	//TODO: Implement validation of size of read data
 	int buffer{};
 	int tmpSize{};
 
