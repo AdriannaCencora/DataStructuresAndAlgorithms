@@ -99,8 +99,17 @@ void Heap::fillWithRandomData(int givenSize, int givenUpperRange) {
 }
 
 void Heap::readFromFile(FileHandler& fileHandler) {
+	//TODO: Implement validation of size of read data
+	int buffer{};
+	int tmpSize{};
 
-	heapArray->readFromFile(fileHandler);
+	fileHandler.inputFile >> tmpSize;
+	int position{0};
+//TODO: Needs alignment - position is always 0. After insert() alignement
+	while(fileHandler.inputFile >> buffer) {
+		insert(position, buffer);
+	}
+
 }
 
 

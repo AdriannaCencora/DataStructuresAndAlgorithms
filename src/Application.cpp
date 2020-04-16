@@ -98,9 +98,10 @@ void Application::chooseOperation() {
 		cin >> operationChosen;
 
 		switch (operationChosen) {
-			case '0':
+			case '0': {
 				isRunning = false;
 				break;
+					  }
 			case '1': {
 				std::string fileName;
 				std::cout << "Filename: " << std::endl;
