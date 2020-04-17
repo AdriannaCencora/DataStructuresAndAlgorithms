@@ -31,7 +31,8 @@ class BST : public GenericStructure {
 
 
     private:
-		BST::Node* insert(Node* currentParent, int value);
+		Node* insert(Node* currentParent, int value);
+		Node* search(Node* node, int value);
 		bool isEmpty();
 		void rotateLeft(Node* axis);
 		void rotateRight(Node* axis);
@@ -44,6 +45,7 @@ class BST : public GenericStructure {
 		bool isLeftChild(Node* child);
 		bool isRightChild(Node* child);
 		void printNode(const std::string &sMiddle, const std::string &sBefore, Node* currNode);
+		void clearStructure(Node *node);
 
 
 		Node* root{nullptr};

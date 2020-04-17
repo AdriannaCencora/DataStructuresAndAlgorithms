@@ -8,16 +8,18 @@ BST::Node* BST::insert(BST::Node* currentParent, int value) {
 	if (currentParent == nullptr) {
 		size++;
 		Node* node = new Node(value);
-		node->parent = currentParent;
+		node->parent = nullptr;
 		return node;
 	}
 
 	else if (currentParent->data > value) {
 		currentParent->leftChild = insert(currentParent->leftChild, value);
+		currentParent->leftChild->parent = currentParent;
 	}
 
 	else if(currentParent->data < value) {
 		currentParent->rightChild = insert(currentParent->rightChild, value);
+		currentParent->rightChild->parent = currentParent;
 	}
 
 	return currentParent;
@@ -26,12 +28,37 @@ BST::Node* BST::insert(BST::Node* currentParent, int value) {
 
 void BST::insert(int position, int value) {
 
+	//seg fault
+//	clearStructure(root);
+
 	root = insert(root, value);
 
 }
 
 void BST::remove(int value) {}
-bool BST::search(int value) {}
+
+
+BST::Node* BST::search(BST::Node* node, int value) {
+
+	if (node == nullptr)
+		return nullptr;
+
+	else if (node->data == value)
+		return node;
+	else if (value < node->data)
+		return search(node->leftChild, value);
+	else
+		return search(node->rightChild, value);
+}
+
+bool BST::search(int value) {
+	Node* result = search(root, value);
+
+	if (result)
+		std::cout << "Node found" << std::endl;
+	return result;
+
+}
 
 int BST::getSize() const {
 	return size;
@@ -58,8 +85,8 @@ void BST::fillWithRandomData(int givenSize, int givenUpperRange) {
 
 	print();
 	std::cout << "!!!" << std::endl;
-	makeLinear();
-	print();
+
+//	fixBalance();
 }
 void BST::readFromFile(FileHandler& fileHandler) {
 
@@ -87,22 +114,60 @@ void BST::rotateLeft(Node* axisNode) {
 	if (axisNode->rightChild == nullptr)
 		return;
 
-	if (axisNode->parent != nullptr) {
+	if (axisNode == nullptr)
+		return;
 
-		if (axisNode->parent->leftChild == axisNode)
-			axisNode->parent->leftChild = axisNode->rightChild;
+	Node* rightChildCopied = axisNode->rightChild;
+	Node* parentCopied = axisNode->parent;
 
-		else if (axisNode->parent->rightChild == axisNode)
-			axisNode->parent->rightChild == axisNode->rightChild;
+	if (rightChildCopied->leftChild != nullptr) {
+
+		axisNode->rightChild = rightChildCopied->leftChild;
+		axisNode->rightChild->parent = axisNode;
 	}
 
-	axisNode->rightChild->parent = axisNode->parent;
-	axisNode->parent = axisNode->rightChild;
-	axisNode->rightChild->leftChild = axisNode;
+	else
+		axisNode->rightChild = nullptr;
 
-	if (axisNode->rightChild->leftChild != nullptr) {
-		axisNode->rightChild = axisNode->rightChild->leftChild;
+	rightChildCopied->leftChild = axisNode;
+	rightChildCopied->parent = parentCopied;
+	axisNode->parent = rightChildCopied;
+
+
+	if (parentCopied != nullptr) {
+
+		if (parentCopied->leftChild == axisNode) {
+			parentCopied->leftChild = rightChildCopied;
+		}
+
+		else if (parentCopied->rightChild == axisNode) {
+			parentCopied->rightChild == rightChildCopied;
+		}
+
 	}
+
+	else
+		root = rightChildCopied;
+
+//	if (axisNode->rightChild == nullptr)
+//		return;
+//
+//	if (axisNode->parent != nullptr) {
+//
+//		if (axisNode->parent->leftChild == axisNode)
+//			axisNode->parent->leftChild = axisNode->rightChild;
+//
+//		else if (axisNode->parent->rightChild == axisNode)
+//			axisNode->parent->rightChild == axisNode->rightChild;
+//	}
+//
+//	axisNode->rightChild->parent = axisNode->parent;
+//	axisNode->parent = axisNode->rightChild;
+//	axisNode->rightChild->leftChild = axisNode;
+//
+//	if (axisNode->rightChild->leftChild != nullptr) {
+//		axisNode->rightChild = axisNode->rightChild->leftChild;
+//	}
 }
 
 void BST::rotateRight(Node* axisNode) {
@@ -116,11 +181,13 @@ void BST::rotateRight(Node* axisNode) {
 	Node* leftChildCopied = axisNode->leftChild;
 	Node* parentCopied = axisNode->parent;
 
-	if (leftChildCopied->rightChild) {
+	axisNode->leftChild = leftChildCopied->rightChild;
 
-		axisNode->leftChild = leftChildCopied->rightChild;
+	if (leftChildCopied->rightChild != nullptr)
 		axisNode->leftChild->parent = axisNode;
-	}
+
+//	else
+		//axisNode->leftChild = nullptr;
 
 	leftChildCopied->rightChild = axisNode;
 	leftChildCopied->parent = parentCopied;
@@ -134,38 +201,13 @@ void BST::rotateRight(Node* axisNode) {
 		}
 
 		else if (parentCopied->rightChild == axisNode) {
-			parentCopied->rightChild == axisNode->leftChild;
+			parentCopied->rightChild = leftChildCopied;
 		}
 
 	}
 
 	else
 		root = leftChildCopied;
-
-
-
-
-	//
-//	// setting childs
-//	if (axisNode->leftChild->rightChild != nullptr) {
-//		axisNode->leftChild = axisNode->leftChild->rightChild;
-//		axisNode->leftChild->parent = axisNode;
-//	}
-//
-//	axisNode->leftChild->rightChild = axisNode;
-//
-//
-//	axisNode->leftChild->parent = axisNode->parent;
-//	axisNode->parent = axisNode->leftChild;
-//
-//	if (axisNode->leftChild->parent == nullptr)
-//		root = axisNode->leftChild;
-
-//	axisNode->leftChild->parent = axisNode->parent;
-//	axisNode->parent = axisNode->leftChild;
-//	axisNode->leftChild->rightChild = axisNode;
-
-
 
 }
 
@@ -175,7 +217,9 @@ void BST::makeLinear() {
 	Node* currentAxisNode = root;
 
 	while (currentAxisNode != nullptr) {
-
+		std::cout<< "***********" << std::endl;
+		print();
+		std::cout<< "***********" << std::endl;
 		if (currentAxisNode->leftChild != nullptr) {
 			rotateRight(currentAxisNode);
 			currentAxisNode = currentAxisNode->parent;
@@ -189,8 +233,41 @@ void BST::makeLinear() {
 
 }
 
-void BST::makeBalanced() {}
-void BST::fixBalance() {}
+void BST::makeBalanced() {
+
+	int rotationNumber = pow(2, floor(log2(size + 1))) - 1;
+	int firstIterationRotationNumber = size - rotationNumber;
+
+	Node* currentAxisNode = root;
+
+	for (int i{0}; i < firstIterationRotationNumber; i++) {
+		rotateLeft(currentAxisNode);
+		currentAxisNode = currentAxisNode->parent->rightChild;
+	}
+
+	while (rotationNumber > 1) {
+		currentAxisNode = root;
+		rotationNumber = floor(rotationNumber / 2);
+
+		for (int i{0}; i < rotationNumber; i++) {
+			rotateLeft(currentAxisNode);
+			currentAxisNode = currentAxisNode->parent->rightChild;
+		}
+
+	}
+
+}
+
+
+void BST::fixBalance() {
+
+	if (root != nullptr) {
+		makeLinear();
+		makeBalanced();
+	}
+}
+
+
 BST::Node* BST::getMin(BST::Node* node) {}
 BST::Node* BST::getMax(BST::Node* node) {}
 BST::Node* BST::getPredecessor(BST::Node* node) {}
@@ -223,5 +300,12 @@ void BST::printNode(const std::string &sMiddle, const std::string &sBefore, Node
 
 }
 
+void BST::clearStructure(BST::Node *node) {
+	if (node != nullptr) {
 
+		clearStructure(node->leftChild);
+		clearStructure(node->rightChild);
+		delete node;
+	}
 
+}
