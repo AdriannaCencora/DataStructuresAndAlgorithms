@@ -3,7 +3,6 @@
 #include <string>
 #include <random>
 
-//TODO: structure is not cleared properly
 BST::Node* BST::insert(BST::Node* currentParent, int value) {
 
 	if (currentParent == nullptr) {
@@ -29,14 +28,82 @@ BST::Node* BST::insert(BST::Node* currentParent, int value) {
 
 void BST::insert(int position, int value) {
 
-	//seg fault
-//	clearStructure(root);
-
 	root = insert(root, value);
+}
+
+void BST::remove(int value) {
+
+	Node* nodeToDelete = findNodeByValue(value);
+
+	if (nodeToDelete != nullptr) {
+		remove(nodeToDelete);
+		size--;
+	}
 
 }
 
-void BST::remove(int value) {}
+void BST::remove(BST::Node* nodeToDelete) {
+
+	if (nodeToDelete->rightChild == nullptr and nodeToDelete->leftChild == nullptr) {
+
+		if (nodeToDelete == root) {
+			clearStructure(root);
+			return;
+		}
+		if (nodeToDelete->parent->rightChild == nodeToDelete)
+			nodeToDelete->parent->rightChild = nullptr;
+		else
+			nodeToDelete->parent->leftChild = nullptr;
+	}
+
+	else if (nodeToDelete->rightChild != nullptr and nodeToDelete->leftChild == nullptr and nodeToDelete->parent != nullptr) {
+
+		if (nodeToDelete->parent->rightChild == nodeToDelete)
+			nodeToDelete->parent->rightChild = nodeToDelete->rightChild;
+		else
+			nodeToDelete->parent->leftChild = nodeToDelete->rightChild;
+
+		nodeToDelete->rightChild->parent = nodeToDelete->parent;
+
+	}
+
+	else if (nodeToDelete->leftChild != nullptr and nodeToDelete->rightChild == nullptr and nodeToDelete->parent != nullptr) {
+
+		if (nodeToDelete->parent->rightChild == nodeToDelete)
+			nodeToDelete->parent->rightChild = nodeToDelete->leftChild;
+		else
+			nodeToDelete->parent->leftChild = nodeToDelete->leftChild;
+
+		nodeToDelete->leftChild->parent = nodeToDelete->parent;
+	}
+
+	else {
+		Node* node = getSuccessor(nodeToDelete);
+
+		if (node == nullptr)
+			node = getPredecessor(nodeToDelete);
+
+		nodeToDelete->data = node->data;
+		remove(node);
+	}
+
+
+}
+
+BST::Node* BST::findNodeByValue(int value) {
+
+	Node* node = root;
+
+	while(node != nullptr and node->data != value) {
+
+		if (value < node->data)
+			node = node->leftChild;
+		else
+			node = node->rightChild;
+	}
+
+	return node;
+}
 
 
 BST::Node* BST::search(BST::Node* node, int value) {
@@ -71,6 +138,8 @@ void BST::print() {
 
 void BST::fillWithRandomData(int givenSize, int givenUpperRange) {
 
+	clearStructure(root);
+
 	const int upperRange = givenUpperRange;
 
 	std::random_device seed;
@@ -82,13 +151,10 @@ void BST::fillWithRandomData(int givenSize, int givenUpperRange) {
 		insert(position, transform(randomGenerator));
 	}
 
-	print();
-	std::cout << "!!!" << std::endl;
-
-	fixBalance();
 }
 void BST::readFromFile(FileHandler& fileHandler) {
 
+	clearStructure(root);
 	//TODO: Implement validation of size of read data
 	int buffer{};
 	int tmpSize{};
@@ -101,7 +167,6 @@ void BST::readFromFile(FileHandler& fileHandler) {
 	}
 
 }
-
 
 bool BST::isEmpty() {
 
@@ -235,7 +300,6 @@ void BST::fixBalance() {
 	}
 }
 
-
 BST::Node* BST::getMin(BST::Node* node) {
 	while (node->leftChild != nullptr) {
 		node = node->leftChild;
@@ -253,8 +317,37 @@ BST::Node* BST::getMax(BST::Node* node) {
 }
 
 
-BST::Node* BST::getPredecessor(BST::Node* node) {}
-BST::Node* BST::getSuccessor(BST::Node* node) {}
+BST::Node* BST::getPredecessor(BST::Node* node) {
+
+	if (node->leftChild != nullptr)
+		return getMax(node->leftChild);
+
+	Node* parentNode = node->parent;
+
+	while (parentNode != nullptr and parentNode->rightChild != node) {
+		node = parentNode;
+		parentNode = node->parent;
+	}
+
+	return parentNode;
+
+}
+
+BST::Node* BST::getSuccessor(BST::Node* node) {
+
+	if (node->rightChild != nullptr)
+		return getMin(node->rightChild);
+
+	Node* parentNode = node->parent;
+
+	while (parentNode != nullptr and parentNode->leftChild != node) {
+		node = parentNode;
+		parentNode = node->parent;
+	}
+
+	return parentNode;
+
+}
 
 void BST::printNode(const std::string &sMiddle, const std::string &sBefore, Node* currNode) {
 
@@ -282,11 +375,13 @@ void BST::printNode(const std::string &sMiddle, const std::string &sBefore, Node
 }
 
 void BST::clearStructure(BST::Node *node) {
-	if (node != nullptr) {
 
+	if (node != nullptr) {
 		clearStructure(node->leftChild);
 		clearStructure(node->rightChild);
 		delete node;
 	}
+
+	size = 0;
 
 }

@@ -6,7 +6,7 @@ class GenericStructure {
     public:
         virtual ~GenericStructure() = default;
 
-        virtual void insert(int position, int value) = 0;
+        virtual void insert(int value, int position) = 0;
         virtual void remove(int position) = 0;
         virtual bool search(int value) = 0;
         virtual int getSize() const = 0;
