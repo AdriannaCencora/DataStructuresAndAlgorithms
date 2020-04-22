@@ -18,8 +18,6 @@ void Application::displayMenu() {
     cout << "2. Double Linked List." << endl;
     cout << "3. Heap." << endl;
     cout << "4. BST." << endl;
-    cout << "5. R&B Tree." << endl;
-    cout << "6. AVL." << endl;
 
     cout << "t. Test." << endl;
     cout << "0. Exit." << endl << endl;
@@ -35,6 +33,7 @@ void Application::displaySubMenu() {
 	cout << "4. Insert" << endl;
 	cout << "5. Remove" << endl;
 	cout << "6. Print" << endl;
+	cout << "7. Fix BST (available only for BST)" << endl;
 	cout << "0. Exit" << endl << endl;
 }
 
@@ -87,21 +86,23 @@ void Application::run() {
 
 void Application::chooseOperation() {
 
-	bool isRunning{true};
+	bool stop{false};
 	int position{};
 	int size{};
 	int value{};
 	int upperRange{};
 
-	while (isRunning) {
+	while (!stop) {
 		displaySubMenu();
 		cin >> operationChosen;
 
 		switch (operationChosen) {
 			case '0': {
-				isRunning = false;
+
+				stop=true;;
 				break;
-					  }
+				}
+
 			case '1': {
 				std::string fileName;
 				std::cout << "Filename: " << std::endl;
@@ -109,6 +110,7 @@ void Application::chooseOperation() {
 
 				auto fileHandler = new FileHandler(fileName);
 				structure->readFromFile(*fileHandler);
+				structure->print();
 				delete fileHandler;
 				break;
 					  }
@@ -126,9 +128,9 @@ void Application::chooseOperation() {
 				std::cin >> value;
 
 				if (structure->search(value))
-					std::cout << "Number found" ;
+					std::cout << "Number found" << std::endl;
 				else
-					std::cout << "Number not found" ;
+					std::cout << "Number not found"<< std::endl ;
 
 				structure->print();
 				break;
@@ -136,25 +138,33 @@ void Application::chooseOperation() {
 			case '4': {
 				std::cout << "Value to insert: " << std::endl;
 				std::cin >> value;
-				std::cout << "Position: " << std::endl;
+				std::cout << "Position (type '0' for BST and heap): " << std::endl;
 				std::cin >> position;
 				structure->insert(position, value);
 				structure->print();
 				break;
 					  }
 			case '5': {
-				std::cout << "Remove from position (array) / remove value (list, heap]): " << std::endl;
+				std::cout << "Remove from position (array) / remove value (list, heap, BST): " << std::endl;
 				std::cin >> position;
 				structure->remove(position);
 				structure->print();
 				break;
 					  }
-			case '6':
+			case '6': {
 				structure->print();
 				break;
-			default:
+					  }
+			case '7': {
+				  structure->fixBalance();
+				  structure->print();
+
+					}
+			default: {
 				std::cout << "Wrooong number, next time choose better!" << endl << endl;
 				break;
+
+					 }
 
 
 

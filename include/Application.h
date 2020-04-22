@@ -14,7 +14,7 @@ class Application {
 	private:
 	std::unique_ptr<GenericStructure> structure{};
     char userChoice{};
-	char operationChosen{};
+	char operationChosen{1};
     bool isRunning{true};
 
     void displaySubMenu();

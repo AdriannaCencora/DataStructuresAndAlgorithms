@@ -146,7 +146,6 @@ void BST::fillWithRandomData(int givenSize, int givenUpperRange) {
     std::mt19937 randomGenerator(seed());
 	std::uniform_int_distribution<> transform(1, upperRange);
 
-//TODO: Needs alignment - position is always 0. After insert() alignement
 	for (int position{0}; position < givenSize; ++position) {
 		insert(position, transform(randomGenerator));
 	}
@@ -155,13 +154,12 @@ void BST::fillWithRandomData(int givenSize, int givenUpperRange) {
 void BST::readFromFile(FileHandler& fileHandler) {
 
 	clearStructure(root);
-	//TODO: Implement validation of size of read data
 	int buffer{};
 	int tmpSize{};
 
 	fileHandler.inputFile >> tmpSize;
 	int position{0};
-//TODO: Needs alignment - position is always 0. After insert() alignement
+
 	while(fileHandler.inputFile >> buffer) {
 		insert(position, buffer);
 	}
@@ -252,9 +250,6 @@ void BST::makeLinear() {
 	Node* currentAxisNode = root;
 
 	while (currentAxisNode != nullptr) {
-		std::cout<< "***********" << std::endl;
-		print();
-		std::cout<< "***********" << std::endl;
 		if (currentAxisNode->leftChild != nullptr) {
 			rotateRight(currentAxisNode);
 			currentAxisNode = currentAxisNode->parent;
@@ -375,13 +370,14 @@ void BST::printNode(const std::string &sMiddle, const std::string &sBefore, Node
 }
 
 void BST::clearStructure(BST::Node *node) {
-
 	if (node != nullptr) {
-		clearStructure(node->leftChild);
-		clearStructure(node->rightChild);
-		delete node;
-	}
-
+	node->parent = nullptr;
+	node->leftChild = nullptr;
+	node->rightChild = nullptr;
+	node = nullptr;
 	size = 0;
+
+
+	}
 
 }

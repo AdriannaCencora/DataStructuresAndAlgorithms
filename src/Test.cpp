@@ -1,7 +1,8 @@
 #include "Test.h"
 #include "DoubleLinkedList.h"
 #include "DynamicArray.h"
-
+#include "Heap.h"
+#include "BST.h"
 #include <fstream>
 #include <sstream>
 #include <chrono>
@@ -9,11 +10,25 @@
 void Test::run() {
 	srand (time(NULL));
 
+	structure = std::make_unique<BST>();
+	prependFile("BST");
+	insertionTests(true);
+	deletionTests(true);
+	searchTests();
+
+	structure = std::make_unique<Heap>();
+	prependFile("Heap");
+	insertionTests(true);
+	deletionTests(true);
+	searchTests();
+
+
 	structure = std::make_unique<DoubleLinkedList>();
 	prependFile("DoubleLinkedList");
 	insertionTests(true);
 	deletionTests(true);
 	searchTests();
+
 
 	structure = std::make_unique<DynamicArray>();
 	prependFile("DynamicArray");
@@ -44,14 +59,14 @@ void Test::prepareStructure(int size) {
 }
 
 void Test::insertionTests(bool byValue) {
-	insertFront(byValue);
-	insertBack(byValue);
+//	insertFront(byValue);
+//	insertBack(byValue);
 	insertAtPosition(byValue);
 }
 
 void Test::deletionTests(bool byValue) {
-	deleteFront(byValue);
-	deleteBack(byValue);
+//	deleteFront(byValue);
+//	deleteBack(byValue);
 	deleteAtPosition(byValue);
 }
 

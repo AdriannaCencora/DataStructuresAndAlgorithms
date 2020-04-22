@@ -3,7 +3,6 @@
 #include <random>
 
 void Heap::insert(int position, int value) {
-//TODO: set default value to position
 	if (position != heapArray->getSize())
 		position = heapArray->getSize();
 
@@ -38,27 +37,27 @@ void Heap::remove(int value) {
 	heapArray->swapElements(indexFound, heapArray->getSize() -1);
 	heapArray->remove(heapArray->getSize() -1);
 
+	std::cout << "Before fix" << std::endl;
+	print();
 	//TODO: Extract to function
 
 	 int parentIndex = indexFound;
 	 int leftChildIndex = 2 * indexFound + 1;
-	 int rightChildIndex = 2 * indexFound + 1;
+	 int rightChildIndex = 2 * indexFound + 2;
 	 int swapChildIndex;
 
-	 while (leftChildIndex < heapArray->getSize()  or rightChildIndex < heapArray->getSize()) {
+	 while (leftChildIndex < heapArray->getSize()  and rightChildIndex < heapArray->getSize()) {
 
-	     leftChildIndex = 2 * parentIndex + 1;
-	     rightChildIndex = 2 * parentIndex + 2;
 
 	     swapChildIndex = ((*heapArray)[leftChildIndex] > (*heapArray)[rightChildIndex]) ? leftChildIndex : rightChildIndex;
-
-	     std::cout << leftChildIndex << "|" << rightChildIndex << "|" << swapChildIndex << std::endl;
 
 	     if ((*heapArray)[swapChildIndex] > (*heapArray)[parentIndex]) {
 
 	         heapArray->swapElements(parentIndex, swapChildIndex);
 	         parentIndex = swapChildIndex;
 	     }
+	     leftChildIndex = 2 * parentIndex + 1;
+	     rightChildIndex = 2 * parentIndex + 2;
 	}
 
 	--size;

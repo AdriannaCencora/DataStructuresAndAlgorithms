@@ -26,7 +26,7 @@ void DynamicArray::remove(int position) {
 		throw std::bad_alloc();
 	}
 
-	for (int i{position}; i < size -1; ++i) {
+	for (int i{position}; i < (size -1); ++i) {
 		data[i] = data[i + 1];
 	}
 
