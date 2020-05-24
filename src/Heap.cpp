@@ -8,8 +8,14 @@ void Heap::insert(int position, int value) {
 
 	heapArray->insert(position, value);
 
-	//TODO: Extract to function
-	int currentNode = heapArray->getSize() - 1;
+	fixUp(heapArray->getSize() - 1);
+
+	++size;
+}
+
+void Heap::fixUp(int indexFound) {
+
+	int currentNode = indexFound;
 	int parent = (currentNode - 1) / 2;
 
 	while (currentNode != 0 and (*heapArray)[currentNode] > (*heapArray)[parent]) {
@@ -18,28 +24,10 @@ void Heap::insert(int position, int value) {
 		parent = (currentNode - 1) / 2;
 	}
 
-	++size;
+
 }
 
-
-void Heap::remove(int value) {
-
-	int indexFound;
-
-	for (int i{0}; i < heapArray->getSize(); i++) {
-
-		if((*heapArray)[i] == value ) {
-			indexFound = i;
-			break;
-		}
-	}
-
-	heapArray->swapElements(indexFound, heapArray->getSize() -1);
-	heapArray->remove(heapArray->getSize() -1);
-
-	std::cout << "Before fix" << std::endl;
-	print();
-	//TODO: Extract to function
+void Heap::fixDown(int indexFound) {
 
 	 int parentIndex = indexFound;
 	 int leftChildIndex = 2 * indexFound + 1;
@@ -59,6 +47,35 @@ void Heap::remove(int value) {
 	     leftChildIndex = 2 * parentIndex + 1;
 	     rightChildIndex = 2 * parentIndex + 2;
 	}
+
+
+}
+
+void Heap::remove(int value) {
+
+	int indexFound;
+
+	for (int i{0}; i < heapArray->getSize(); i++) {
+
+		if((*heapArray)[i] == value ) {
+			indexFound = i;
+			break;
+		}
+	}
+
+	bool isBigger;
+	(*heapArray)[heapArray->getSize() -1] > (*heapArray)[indexFound] ? isBigger = true : isBigger = false;
+
+	heapArray->swapElements(indexFound, heapArray->getSize() -1);
+	heapArray->remove(heapArray->getSize() -1);
+
+//	std::cout << "Before fix" << std::endl;
+//	print();
+//
+	if (isBigger)
+		fixUp(indexFound);
+	else
+		fixDown(indexFound);
 
 	--size;
 
@@ -135,5 +152,5 @@ void Heap::printTree(const std::string& sMiddle, const std::string &sBefore, int
 }
 
 void Heap::clearStructure() {
-	this->~Heap();
+	heapArray->clearStructure();
 }

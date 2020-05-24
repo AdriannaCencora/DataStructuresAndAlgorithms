@@ -23,6 +23,9 @@ class Heap : public GenericStructure {
 
     private:
 		void printTree(const std::string& sMiddle, const std::string &sBefore, int currNode);
+		void fixUp(int index);
+		void fixDown(int index);
+
 		int size{};
         std::unique_ptr<DynamicArray> heapArray{};
 };
