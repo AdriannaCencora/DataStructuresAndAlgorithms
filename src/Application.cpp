@@ -109,6 +109,7 @@ void Application::chooseOperation() {
 				std::cin >> fileName;
 
 				auto fileHandler = new FileHandler(fileName);
+				structure->clearStructure();
 				structure->readFromFile(*fileHandler);
 				structure->print();
 				delete fileHandler;
@@ -119,6 +120,7 @@ void Application::chooseOperation() {
 				std::cin >> size;
 				std::cout << "Upper range: " << std::endl;
 				std::cin >> upperRange;
+				structure->clearStructure();
 				structure->fillWithRandomData(size, upperRange);
 				structure->print();
 				break;

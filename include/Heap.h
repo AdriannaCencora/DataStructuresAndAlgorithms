@@ -19,6 +19,7 @@ class Heap : public GenericStructure {
 		virtual int getSize() const;
         virtual void fillWithRandomData(int givenSize, int givenUpperRange);
 		virtual void readFromFile(FileHandler& fileHandler);
+		virtual void clearStructure();
 
     private:
 		void printTree(const std::string& sMiddle, const std::string &sBefore, int currNode);

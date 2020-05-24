@@ -68,24 +68,32 @@ void DoubleLinkedList::remove(int value) {
 	if (currentNode == nullptr)
 		std::cout << std::endl << "Node doesn't exist" << std::endl;
 
+	else if (size == 1) {
+		tail = nullptr;
+		head = nullptr;
+		--size;
+	}
+
 	else if (currentNode == head) {
 		currentNode->next->prev = nullptr;
 		head = currentNode->next;
+		--size;
 	}
 
 	else if (currentNode == tail) {
 		currentNode->prev->next = nullptr;
 		tail = currentNode->prev;
+		--size;
 	}
 
 
 	else {
 		currentNode->prev->next = currentNode->next;
 		currentNode->next->prev = currentNode->prev;
+		--size;
 
 	}
 
-	--size;
 }
 
 
@@ -112,6 +120,16 @@ void DoubleLinkedList::print() {
 		std::cout<< currentNode->data << " ";
 		currentNode = currentNode->next;
 	}
+
+	std::cout <<  std::endl;
+
+	currentNode = tail;
+
+	while (currentNode != nullptr) {
+		std::cout<< currentNode->data << " ";
+		currentNode = currentNode->prev;
+	}
+
 }
 
 void DoubleLinkedList::fillWithRandomData(int givenSize, int givenUpperRange) {
@@ -169,4 +187,9 @@ void DoubleLinkedList::findNodeByValue(int value) {
 		}
 
 
+}
+void DoubleLinkedList::clearStructure() {
+	head = nullptr;
+	tail = nullptr;
+	size = 0;
 }

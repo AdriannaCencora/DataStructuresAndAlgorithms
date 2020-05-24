@@ -14,4 +14,5 @@ class GenericStructure {
         virtual void fillWithRandomData(int givenSize, int givenUpperRange) = 0;
 		virtual void readFromFile(FileHandler& fileHandler) = 0;
 		virtual void fixBalance() { std::cout << "Not implemented do this data structure." << std::endl; }
+		virtual void clearStructure() = 0;
 };

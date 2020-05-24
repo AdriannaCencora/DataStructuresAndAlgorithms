@@ -133,3 +133,7 @@ void Heap::printTree(const std::string& sMiddle, const std::string &sBefore, int
 		printTree(s + (char)124 + " ", (std::string(1, (char)92)) + std::string(1, (char)126), 2 * currNode + 1);
 }
 }
+
+void Heap::clearStructure() {
+	this->~Heap();
+}

@@ -162,6 +162,11 @@ void DynamicArray::swapElements(int first, int second) {
 
 }
 
+
+void DynamicArray::clearStructure() {
+	size = 0;
+}
+
 int DynamicArray::operator[](int position) {
 	return data[position];
 }
