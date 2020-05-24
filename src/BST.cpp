@@ -383,5 +383,6 @@ void BST::clearStructure(BST::Node *node) {
 }
 
 void BST::clearStructure() {
-	this->~BST();
+	size = 0;
+	root = nullptr;
 }

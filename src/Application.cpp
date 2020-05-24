@@ -63,11 +63,13 @@ void Application::run() {
 					{
 						structure = std::make_unique<Heap>();
 						chooseOperation();
+						break;
 					}
 				case '4':
 					{
 						structure = std::make_unique<BST>();
 						chooseOperation();
+						break;
 					}
 				case 't':
 					{
